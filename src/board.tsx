@@ -75,7 +75,7 @@ export default class Board extends React.Component<{}, BoardState> {
     }
     
     // check if 3 cells have same non-empty val - return the winner state; otherwise undefined 
-    check3Cells(cells: CellValue[], pos0: number, pos1: number, pos2: number): GameState | undefined {
+    private check3Cells(cells: CellValue[], pos0: number, pos1: number, pos2: number): GameState | undefined {
         if (cells[pos0] === cells[pos1] &&
             cells[pos1] === cells[pos2] &&
             cells[pos0] !== "") {
@@ -90,7 +90,7 @@ export default class Board extends React.Component<{}, BoardState> {
     }
     
     // list all empty cell positions
-    findAllEmptyCells(cells: CellValue[]): number[] {
+    private findAllEmptyCells(cells: CellValue[]): number[] {
         return cells.map((v, i) => { 
             if (v === "") {
                 return i;
@@ -102,7 +102,7 @@ export default class Board extends React.Component<{}, BoardState> {
     }
     
     // make a move
-    move(pos: number, val: CellValue, callback?: () => void): void {
+    private move(pos: number, val: CellValue, callback?: () => void): void {
         if (this.state.gameState === "" &&
             this.state.cells[pos] === "") {
             let newCells = this.state.cells.slice();
@@ -120,7 +120,7 @@ export default class Board extends React.Component<{}, BoardState> {
     }
 
     // handle a new move from player
-    handleNewPlayerMove(pos:number): void {
+    private handleNewPlayerMove(pos:number): void {
         this.move(pos, playerCell, () => {
             // AI make a random move following player's move
             let emptyCells = this.findAllEmptyCells(this.state.cells);
@@ -177,7 +177,7 @@ class Cell extends React.Component<CellProps, {}> {
         return className;
     }
 
-    private handleClick(e: React.MouseEvent) {
+    private handleClick(e: React.MouseEvent<HTMLDivElement>) {
         this.props.handleMove();
     }
 

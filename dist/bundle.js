@@ -1,2 +1,454 @@
-!function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=2)}([function(t,e){t.exports=React},function(t,e){t.exports=ReactDOM},function(t,e,n){"use strict";n.r(e);var r,o=n(0),a=n(1),i=(r=function(t,e){return(r=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var n in e)e.hasOwnProperty(n)&&(t[n]=e[n])})(t,e)},function(t,e){function n(){this.constructor=t}r(t,e),t.prototype=null===e?Object.create(e):(n.prototype=e.prototype,new n)}),c=function(t){function e(e){var n=t.call(this,e)||this;return n.state=n.getInitState(),n}return i(e,t),e.prototype.getInitState=function(){return{cells:Array.apply(null,Array(9)).map((function(){return""})),gameState:""}},e.prototype.resetState=function(){this.setState(this.getInitState())},e.prototype.componentDidMount=function(){var t=this;window.addEventListener("restart",(function(){return t.resetState()}))},e.prototype.componentWillUnmount=function(){var t=this;window.removeEventListener("restart",(function(){return t.resetState()}))},e.prototype.handleGameStateChange=function(t){var e=new CustomEvent("gameStateChange",{detail:this.state.gameState});e.initEvent("gameStateChange",!1,!0),window.dispatchEvent(e)},e.prototype.checkGameState=function(t,e,n){if(""!==this.state.gameState)return this.state.gameState;var r=this.check3Cells(t,3*Math.floor(e/3),3*Math.floor(e/3)+1,3*Math.floor(e/3)+2);return r||((r=this.check3Cells(t,e%3,e%3+3,e%3+6))?r:(r=this.check3Cells(t,0,4,8))?r:(r=this.check3Cells(t,2,4,6))||(0===this.findAllEmptyCells(t).length?"Draw :(":""))},e.prototype.check3Cells=function(t,e,n,r){return t[e]===t[n]&&t[n]===t[r]&&""!==t[e]?"X"===t[e]?"X Wins!":"O Wins!":void 0},e.prototype.findAllEmptyCells=function(t){return t.map((function(t,e){return""===t?e:-1})).filter((function(t){return-1!==t}))},e.prototype.move=function(t,e,n){var r=this;if(""===this.state.gameState&&""===this.state.cells[t]){var o=this.state.cells.slice();o[t]=e;var a=this.state.gameState;this.setState({cells:o,gameState:this.checkGameState(o,t,e)},(function(){r.state.gameState!==a&&r.handleGameStateChange(r.state.gameState),n&&n.call(r)}))}},e.prototype.handleNewPlayerMove=function(t){var e=this;this.move(t,"X",(function(){var t=e.findAllEmptyCells(e.state.cells),n=t[Math.floor(Math.random()*t.length)];e.move(n,"O")}))},e.prototype.render=function(){var t=this,e=this.state.cells.map((function(e,n){return o.createElement(s,{key:n,pos:n,val:e,handleMove:function(){return t.handleNewPlayerMove(n)}})}));return o.createElement("div",{className:"board"},e)},e}(o.Component),s=function(t){function e(){return null!==t&&t.apply(this,arguments)||this}return i(e,t),e.prototype.posToClassName=function(t){var e="cell";switch(Math.floor(t/3)){case 0:e+=" top";break;case 2:e+=" bottom"}switch(t%3){case 0:e+=" left";break;case 2:e+=" right"}return e},e.prototype.handleClick=function(t){this.props.handleMove()},e.prototype.render=function(){var t=this,e=this.props.val;return""===this.props.val&&(e=""),o.createElement("div",{className:this.posToClassName(this.props.pos),onClick:function(e){return t.handleClick(e)}},o.createElement("div",{className:e}," ",this.props.val," "))},e}(o.Component),u=function(){var t=function(e,n){return(t=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var n in e)e.hasOwnProperty(n)&&(t[n]=e[n])})(e,n)};return function(e,n){function r(){this.constructor=e}t(e,n),e.prototype=null===n?Object.create(n):(r.prototype=n.prototype,new r)}}(),l=function(t){function e(){return null!==t&&t.apply(this,arguments)||this}return u(e,t),e.prototype.handleClick=function(t){var e=document.createEvent("Event");e.initEvent("restart",!1,!0),window.dispatchEvent(e)},e.prototype.render=function(){var t=this;return o.createElement("a",{href:"#",className:"restartBtn",onClick:function(e){return t.handleClick(e)}},"Restart")},e}(o.Component),p=function(){var t=function(e,n){return(t=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var n in e)e.hasOwnProperty(n)&&(t[n]=e[n])})(e,n)};return function(e,n){function r(){this.constructor=e}t(e,n),e.prototype=null===n?Object.create(n):(r.prototype=n.prototype,new r)}}(),f=function(t){function e(e){var n=t.call(this,e)||this;return n.state={gameState:""},n}return p(e,t),e.prototype.handleGameStateChange=function(t){this.setState({gameState:t.detail})},e.prototype.handleRestart=function(t){this.setState({gameState:""})},e.prototype.componentDidMount=function(){var t=this;window.addEventListener("gameStateChange",(function(e){return t.handleGameStateChange(e)})),window.addEventListener("restart",(function(e){return t.handleRestart(e)}))},e.prototype.componentWillUnmount=function(){var t=this;window.removeEventListener("gameStateChange",(function(e){return t.handleGameStateChange(e)})),window.removeEventListener("restart",(function(e){return t.handleRestart(e)}))},e.prototype.render=function(){return o.createElement("div",{className:"gameStateBar"}," ",this.state.gameState," ")},e}(o.Component),h=function(){var t=function(e,n){return(t=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(t,e){t.__proto__=e}||function(t,e){for(var n in e)e.hasOwnProperty(n)&&(t[n]=e[n])})(e,n)};return function(e,n){function r(){this.constructor=e}t(e,n),e.prototype=null===n?Object.create(n):(r.prototype=n.prototype,new r)}}(),m=function(t){function e(){return null!==t&&t.apply(this,arguments)||this}return h(e,t),e.prototype.render=function(){return o.createElement("div",{className:"app"},o.createElement(c,null),o.createElement("div",null,o.createElement("span",{className:"description t1"}," Player(X) "),o.createElement("span",{className:"description t2"}," Computer(O) ")),o.createElement(l,null),o.createElement(f,null))},e}(o.Component);Object(a.render)(o.createElement(m,null),document.getElementById("content"))}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _board__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+/* harmony import */ var _restartBtn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
+/* harmony import */ var _gameStateBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6);
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+
+
+
+var App = /** @class */ (function (_super) {
+    __extends(App, _super);
+    function App() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    App.prototype.render = function () {
+        return (react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { className: "app" },
+            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_board__WEBPACK_IMPORTED_MODULE_2__["default"], null),
+            react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", null,
+                react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("span", { className: "description t1" }, " Player(X) "),
+                react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("span", { className: "description t2" }, " Computer(O) ")),
+            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_restartBtn__WEBPACK_IMPORTED_MODULE_3__["default"], null),
+            react__WEBPACK_IMPORTED_MODULE_0__["createElement"](_gameStateBar__WEBPACK_IMPORTED_MODULE_4__["default"], null)));
+    };
+    return App;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])(react__WEBPACK_IMPORTED_MODULE_0__["createElement"](App, null), document.getElementById("content"));
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = React;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = ReactDOM;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+
+var Board = /** @class */ (function (_super) {
+    __extends(Board, _super);
+    function Board(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = _this.getInitState();
+        return _this;
+    }
+    Board.prototype.getInitState = function () {
+        var cells = Array.apply(null, Array(9)).map(function () { return ""; });
+        return { cells: cells, gameState: "" };
+    };
+    Board.prototype.resetState = function () {
+        this.setState(this.getInitState());
+    };
+    Board.prototype.componentDidMount = function () {
+        var _this = this;
+        window.addEventListener("restart", function () { return _this.resetState(); });
+    };
+    Board.prototype.componentWillUnmount = function () {
+        var _this = this;
+        window.removeEventListener("restart", function () { return _this.resetState(); });
+    };
+    // Fire a global event notifying GameState changes
+    Board.prototype.handleGameStateChange = function (newState) {
+        var event = new CustomEvent("gameStateChange", { "detail": this.state.gameState });
+        event.initEvent("gameStateChange", false, true);
+        window.dispatchEvent(event);
+    };
+    // check the game state - use the latest move
+    Board.prototype.checkGameState = function (cells, latestPos, latestVal) {
+        if (this.state.gameState !== "") {
+            return this.state.gameState;
+        }
+        // check row
+        var result = this.check3Cells(cells, 3 * Math.floor(latestPos / 3), 3 * Math.floor(latestPos / 3) + 1, 3 * Math.floor(latestPos / 3) + 2);
+        if (result) {
+            return result;
+        }
+        // check col
+        result = this.check3Cells(cells, latestPos % 3, latestPos % 3 + 3, latestPos % 3 + 6);
+        if (result) {
+            return result;
+        }
+        // check diag
+        result = this.check3Cells(cells, 0, 4, 8);
+        if (result) {
+            return result;
+        }
+        result = this.check3Cells(cells, 2, 4, 6);
+        if (result) {
+            return result;
+        }
+        // check draw - if all cells are filled
+        if (this.findAllEmptyCells(cells).length === 0) {
+            return "Draw :(";
+        }
+        return "";
+    };
+    // check if 3 cells have same non-empty val - return the winner state; otherwise undefined 
+    Board.prototype.check3Cells = function (cells, pos0, pos1, pos2) {
+        if (cells[pos0] === cells[pos1] &&
+            cells[pos1] === cells[pos2] &&
+            cells[pos0] !== "") {
+            if (cells[pos0] === "X") {
+                return "X Wins!";
+            }
+            return "O Wins!";
+        }
+        else {
+            return undefined;
+        }
+    };
+    // list all empty cell positions
+    Board.prototype.findAllEmptyCells = function (cells) {
+        return cells.map(function (v, i) {
+            if (v === "") {
+                return i;
+            }
+            else {
+                return -1;
+            }
+        }).filter(function (v) { return v !== -1; });
+    };
+    // make a move
+    Board.prototype.move = function (pos, val, callback) {
+        var _this = this;
+        if (this.state.gameState === "" &&
+            this.state.cells[pos] === "") {
+            var newCells = this.state.cells.slice();
+            newCells[pos] = val;
+            var oldState_1 = this.state.gameState;
+            this.setState({ cells: newCells, gameState: this.checkGameState(newCells, pos, val) }, function () {
+                if (_this.state.gameState !== oldState_1) {
+                    _this.handleGameStateChange(_this.state.gameState);
+                }
+                if (callback) {
+                    callback.call(_this);
+                }
+            });
+        }
+    };
+    // handle a new move from player
+    Board.prototype.handleNewPlayerMove = function (pos) {
+        var _this = this;
+        this.move(pos, _constants__WEBPACK_IMPORTED_MODULE_1__["playerCell"], function () {
+            // AI make a random move following player's move
+            var emptyCells = _this.findAllEmptyCells(_this.state.cells);
+            var pos = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+            _this.move(pos, _constants__WEBPACK_IMPORTED_MODULE_1__["aiCell"]);
+        });
+    };
+    Board.prototype.render = function () {
+        var _this = this;
+        var cells = this.state.cells.map(function (v, i) {
+            return (react__WEBPACK_IMPORTED_MODULE_0__["createElement"](Cell, { key: i, pos: i, val: v, handleMove: function () { return _this.handleNewPlayerMove(i); } }));
+        });
+        return (react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { className: "board" }, cells));
+    };
+    return Board;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (Board);
+var Cell = /** @class */ (function (_super) {
+    __extends(Cell, _super);
+    function Cell() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    // position of cell to className
+    Cell.prototype.posToClassName = function (pos) {
+        var className = "cell";
+        switch (Math.floor(pos / 3)) {
+            case 0:
+                className += " top";
+                break;
+            case 2:
+                className += " bottom";
+                break;
+            default: break;
+        }
+        switch (pos % 3) {
+            case 0:
+                className += " left";
+                break;
+            case 2:
+                className += " right";
+                break;
+            default:
+                break;
+        }
+        return className;
+    };
+    Cell.prototype.handleClick = function (e) {
+        this.props.handleMove();
+    };
+    Cell.prototype.render = function () {
+        var _this = this;
+        var name = this.props.val;
+        if (this.props.val === "") {
+            name = "";
+        }
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { className: this.posToClassName(this.props.pos), onClick: function (e) { return _this.handleClick(e); } },
+            react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { className: name },
+                " ",
+                this.props.val,
+                " "));
+    };
+    return Cell;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playerCell", function() { return playerCell; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "aiCell", function() { return aiCell; });
+var playerCell = "X";
+var aiCell = "O";
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var RestartBtn = /** @class */ (function (_super) {
+    __extends(RestartBtn, _super);
+    function RestartBtn() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    // Fire a global event notifying restart of game
+    RestartBtn.prototype.handleClick = function (e) {
+        var event = document.createEvent("Event");
+        event.initEvent("restart", false, true);
+        window.dispatchEvent(event);
+    };
+    RestartBtn.prototype.render = function () {
+        var _this = this;
+        return react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("a", { href: "#", className: "restartBtn", onClick: function (e) { return _this.handleClick(e); } }, "Restart");
+    };
+    return RestartBtn;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (RestartBtn);
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+
+var GameStateBar = /** @class */ (function (_super) {
+    __extends(GameStateBar, _super);
+    function GameStateBar(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = { gameState: "" };
+        return _this;
+    }
+    GameStateBar.prototype.handleGameStateChange = function (e) {
+        this.setState({ gameState: e.detail });
+    };
+    GameStateBar.prototype.handleRestart = function (e) {
+        this.setState({ gameState: "" });
+    };
+    GameStateBar.prototype.componentDidMount = function () {
+        var _this = this;
+        window.addEventListener("gameStateChange", function (e) { return _this.handleGameStateChange(e); });
+        window.addEventListener("restart", function (e) { return _this.handleRestart(e); });
+    };
+    GameStateBar.prototype.componentWillUnmount = function () {
+        var _this = this;
+        window.removeEventListener("gameStateChange", function (e) { return _this.handleGameStateChange(e); });
+        window.removeEventListener("restart", function (e) { return _this.handleRestart(e); });
+    };
+    GameStateBar.prototype.render = function () {
+        return (react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("div", { className: "gameStateBar" },
+            " ",
+            this.state.gameState,
+            " "));
+    };
+    return GameStateBar;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]));
+/* harmony default export */ __webpack_exports__["default"] = (GameStateBar);
+
+
+/***/ })
+/******/ ]);
 //# sourceMappingURL=bundle.js.map
