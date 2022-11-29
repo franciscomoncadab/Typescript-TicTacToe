@@ -5,7 +5,7 @@ interface GameStateBarState{
     gameState: GameState;
 }
 
-export class GameStateBar extends React.Component<{}, GameStateBarState> {
+export default class GameStateBar extends React.Component<{}, GameStateBarState> {
     
     constructor(props: {}) {
         super(props);

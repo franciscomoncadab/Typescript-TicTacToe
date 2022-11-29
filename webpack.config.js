@@ -4,7 +4,7 @@ module.exports = {
     filename: './bundle.js'
   },
   resolve: {
-    extensions: ["ts", "tsx", ".js", ".jsx"]
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
   module: {
     rules: [
@@ -17,6 +17,5 @@ module.exports = {
     "react": "React",
     "react-dom": "ReactDOM",
   },
-
   devtool: "source-map"
 }

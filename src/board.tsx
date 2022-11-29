@@ -6,7 +6,7 @@ interface BoardState {
     gameState: GameState;
 }
 
-export class Board extends React.Component<{}, BoardState> {
+export default class Board extends React.Component<{}, BoardState> {
 
     constructor(props: {}) {
         super(props);        
@@ -33,7 +33,7 @@ export class Board extends React.Component<{}, BoardState> {
     // Fire a global event notifying GameState changes
     private handleGameStateChange(newState: GameState) {
         const event = new CustomEvent("gameStateChange", { "detail": this.state.gameState });
-        event.addEventListener("gameStateChange", (e: CustomEvent) => e.detail.this.state.gameState ? false : true); 
+        event.initEvent("gameStateChange", false, true); 
         window.dispatchEvent(event);
     }   
     
